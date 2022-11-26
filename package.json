@@ -1,0 +1,15 @@
+{
+  "name": "bezier-curve",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bezier.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "chart.js": "3.x"
+  }
+}
