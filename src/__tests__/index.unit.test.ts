@@ -1,6 +1,36 @@
 import { findYPositionAtX, _getPointsToCalculateControlsPoints } from ".."
 
 describe('chartjs-bezier-curve-utility', () => {
+    test('find y at x when t is equal to 0', () => {
+      const data: any = [
+        { x: 0, y: 0 },
+        { x: 5, y: 5 },
+        { x: 15, y: 1.5 },
+        { x: 40, y: 1.5 }
+      ];
+      const xAbsPos = 0;
+      const tension = 0.5;
+
+      const y = findYPositionAtX({ data, xAbsPos, tension });
+
+      expect(y).toMatchSnapshot();
+    });
+
+    test('find y at x when t is equal to 40', () => {
+      const data: any = [
+        { x: 0, y: 0 },
+        { x: 5, y: 5 },
+        { x: 15, y: 1.5 },
+        { x: 40, y: 1.5 }
+      ];
+      const xAbsPos = 40;
+      const tension = 0.5;
+
+      const y = findYPositionAtX({ data, xAbsPos, tension });
+
+      expect(y).toMatchSnapshot();
+    });
+    
     test('find y at x when t is equal to 5', () => {
         const data: any = [
             { x: 0, y: 0 },

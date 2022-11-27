@@ -45,8 +45,11 @@ export function findYPositionAtX({ data, xAbsPos, tension }: any) {
   if (p1 && p2) {
     const xDistance = p2.x - p1.x;
     const t =
-      (xAbsPos - p1.x) /
-      xDistance; /* We need to calculate the t which have values from 0 to 1 */
+      xAbsPos === data[0].x
+        ? 0
+        : xAbsPos === data[data.length - 1].x
+          ? 1
+          : (xAbsPos - p1.x) / xDistance; /* We need to calculate the t which have values from 0 to 1 */
     const controlPoints = splineCurve(p0, p1, p2, tension);
     const { previous: PCL, next: PCR } = controlPoints;
 
