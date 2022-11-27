@@ -8,10 +8,10 @@ describe('chartjs-bezier-curve-utility', () => {
       { x: 15, y: 1.5 },
       { x: 40, y: 1.5 }
     ];
-    const xAbsPos = 0;
+    const xPos = 0;
     const tension = 0.5;
 
-    const y = findYPositionAtX({ data, xAbsPos, tension });
+    const y = findYPositionAtX({ data, xPos, tension });
 
     expect(y).toMatchSnapshot();
   });
@@ -23,10 +23,10 @@ describe('chartjs-bezier-curve-utility', () => {
       { x: 15, y: 1.5 },
       { x: 40, y: 1.5 }
     ];
-    const xAbsPos = 40;
+    const xPos = 40;
     const tension = 0.5;
 
-    const y = findYPositionAtX({ data, xAbsPos, tension });
+    const y = findYPositionAtX({ data, xPos, tension });
 
     expect(y).toMatchSnapshot();
   });
@@ -38,10 +38,10 @@ describe('chartjs-bezier-curve-utility', () => {
       { x: 15, y: 1.5 },
       { x: 40, y: 1.5 }
     ];
-    const xAbsPos = 5;
+    const xPos = 5;
     const tension = 0.5;
 
-    const y = findYPositionAtX({ data, xAbsPos, tension });
+    const y = findYPositionAtX({ data, xPos, tension });
 
     expect(y).toMatchSnapshot();
   });
@@ -53,10 +53,10 @@ describe('chartjs-bezier-curve-utility', () => {
       { x: 15, y: 1.5 },
       { x: 40, y: 1.5 }
     ];
-    const xAbsPos = 15;
+    const xPos = 15;
     const tension = 0.5;
 
-    const y = findYPositionAtX({ data, xAbsPos, tension });
+    const y = findYPositionAtX({ data, xPos, tension });
 
     expect(y).toMatchSnapshot();
   });
@@ -68,10 +68,10 @@ describe('chartjs-bezier-curve-utility', () => {
       { x: 15, y: 1.5 },
       { x: 40, y: 1.5 }
     ];
-    const xAbsPos = 11;
+    const xPos = 11;
     const tension = 0.5;
 
-    const y = findYPositionAtX({ data, xAbsPos, tension });
+    const y = findYPositionAtX({ data, xPos, tension });
 
     expect(y).toMatchSnapshot();
   });
@@ -83,10 +83,10 @@ describe('chartjs-bezier-curve-utility', () => {
       { x: 15.326732397079468, y: 1.5 },
       { x: 40.32673239707947, y: 1.5 }
     ];
-    const xAbsPos = 5.326732397079468;
+    const xPos = 5.326732397079468;
     const tension = 0.5;
 
-    const y = findYPositionAtX({ data, xAbsPos, tension });
+    const y = findYPositionAtX({ data, xPos, tension });
 
     expect(y).toMatchSnapshot();
   });
