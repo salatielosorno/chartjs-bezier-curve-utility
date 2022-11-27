@@ -1,6 +1,6 @@
 import { splineCurve } from 'chart.js/helpers';
 
-function findYPositionBezierCurve({ data, xAbsPos, tension }: any) {
+export function findYPositionAtX({ data, xAbsPos, tension }: any) {
   const xs = data.map((item: any) => item.x);
   const ys = data.map((item: any) => item.y);
 
@@ -54,10 +54,12 @@ function findYPositionBezierCurve({ data, xAbsPos, tension }: any) {
 
     console.log('x >> ', x);
     console.log('y >> ', y);
+
+    return y;
   }
 }
 
-findYPositionBezierCurve({
+/* findYPositionBezierCurve({
   data: [
     { x: 0.3267323970794678, y: 0 },
     { x: 5.326732397079468, y: 5 },
@@ -66,4 +68,4 @@ findYPositionBezierCurve({
   ],
   xAbsPos: 5.326732397079468,
   tension: 0.5
-});
+}); */
