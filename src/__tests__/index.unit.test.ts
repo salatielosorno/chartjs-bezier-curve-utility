@@ -1,4 +1,4 @@
-import { findYPositionAtX } from ".."
+import { findYPositionAtX, _getPointsToCalculateControlsPoints } from ".."
 
 describe('chartjs-bezier-curve-utility', () => {
     test('find y at x when t is equal to 5', () => {
@@ -59,5 +59,89 @@ describe('chartjs-bezier-curve-utility', () => {
         const y = findYPositionAtX({ data, xAbsPos, tension });
 
         expect(y).toMatchSnapshot()
+    })
+
+    test('get prev, current and next points -> x = 16', () => {
+        const data: any = [
+            { x: 0, y: 0 },
+            { x: 5, y: 5 },
+            { x: 15, y: 1.5 },
+            { x: 40, y: 1.5 }
+        ];
+        const xPos = 16;
+
+        const result = _getPointsToCalculateControlsPoints({data, xPos});
+
+        expect(result).toMatchSnapshot()
+    })
+
+    test('get prev, current and next points -> x = 1', () => {
+        const data: any = [
+            { x: 0, y: 0 },
+            { x: 5, y: 5 },
+            { x: 15, y: 1.5 },
+            { x: 40, y: 1.5 }
+        ];
+        const xPos = 1;
+
+        const result = _getPointsToCalculateControlsPoints({data, xPos});
+
+        expect(result).toMatchSnapshot()
+    })
+
+    test('get prev, current and next points -> x = 41', () => {
+        const data: any = [
+            { x: 0, y: 0 },
+            { x: 5, y: 5 },
+            { x: 15, y: 1.5 },
+            { x: 40, y: 1.5 }
+        ];
+        const xPos = 41;
+
+        const result = _getPointsToCalculateControlsPoints({data, xPos});
+
+        expect(result).toMatchSnapshot()
+    })
+
+    test('get prev, current and next points -> x = 0', () => {
+        const data: any = [
+            { x: 0, y: 0 },
+            { x: 5, y: 5 },
+            { x: 15, y: 1.5 },
+            { x: 40, y: 1.5 }
+        ];
+        const xPos = 0;
+
+        const result = _getPointsToCalculateControlsPoints({data, xPos});
+
+        expect(result).toMatchSnapshot()
+    })
+
+    test('get prev, current and next points -> x = 15', () => {
+        const data: any = [
+            { x: 0, y: 0 },
+            { x: 5, y: 5 },
+            { x: 15, y: 1.5 },
+            { x: 40, y: 1.5 }
+        ];
+        const xPos = 15;
+
+        const result = _getPointsToCalculateControlsPoints({data, xPos});
+
+        expect(result).toMatchSnapshot()
+    })
+
+    test('get prev, current and next points -> x = 40', () => {
+        const data: any = [
+            { x: 0, y: 0 },
+            { x: 5, y: 5 },
+            { x: 15, y: 1.5 },
+            { x: 40, y: 1.5 }
+        ];
+        const xPos = 40;
+
+        const result = _getPointsToCalculateControlsPoints({data, xPos});
+
+        expect(result).toMatchSnapshot()
     })
 })

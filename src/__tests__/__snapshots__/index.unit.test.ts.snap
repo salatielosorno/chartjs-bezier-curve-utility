@@ -7,3 +7,105 @@ exports[`chartjs-bezier-curve-utility find y at x when t is equal to 5.326732397
 exports[`chartjs-bezier-curve-utility find y at x when t is equal to 11 1`] = `4.069619188998703`;
 
 exports[`chartjs-bezier-curve-utility find y at x when t is equal to 15 1`] = `1.5`;
+
+exports[`chartjs-bezier-curve-utility get prev, current and next points -> x = 0 1`] = `
+{
+  "next": {
+    "x": 5,
+    "y": 5,
+  },
+  "point": {
+    "x": 0,
+    "y": 0,
+  },
+  "prev": {
+    "x": 0,
+    "y": 0,
+  },
+}
+`;
+
+exports[`chartjs-bezier-curve-utility get prev, current and next points -> x = 1 1`] = `
+{
+  "next": {
+    "x": 5,
+    "y": 5,
+  },
+  "point": {
+    "x": 0,
+    "y": 0,
+  },
+  "prev": {
+    "x": 0,
+    "y": 0,
+  },
+}
+`;
+
+exports[`chartjs-bezier-curve-utility get prev, current and next points -> x = 15 1`] = `
+{
+  "next": {
+    "x": 15,
+    "y": 1.5,
+  },
+  "point": {
+    "x": 5,
+    "y": 5,
+  },
+  "prev": {
+    "x": 0,
+    "y": 0,
+  },
+}
+`;
+
+exports[`chartjs-bezier-curve-utility get prev, current and next points -> x = 16 1`] = `
+{
+  "next": {
+    "x": 40,
+    "y": 1.5,
+  },
+  "point": {
+    "x": 15,
+    "y": 1.5,
+  },
+  "prev": {
+    "x": 5,
+    "y": 5,
+  },
+}
+`;
+
+exports[`chartjs-bezier-curve-utility get prev, current and next points -> x = 40 1`] = `
+{
+  "next": {
+    "x": 40,
+    "y": 1.5,
+  },
+  "point": {
+    "x": 40,
+    "y": 1.5,
+  },
+  "prev": {
+    "x": 15,
+    "y": 1.5,
+  },
+}
+`;
+
+exports[`chartjs-bezier-curve-utility get prev, current and next points -> x = 41 1`] = `
+{
+  "next": {
+    "x": 40,
+    "y": 1.5,
+  },
+  "point": {
+    "x": 40,
+    "y": 1.5,
+  },
+  "prev": {
+    "x": 15,
+    "y": 1.5,
+  },
+}
+`;
