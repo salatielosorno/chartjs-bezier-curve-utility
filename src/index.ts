@@ -1,13 +1,38 @@
 import { splineCurve } from 'chart.js/helpers';
 
-export function _getPointsToCalculateControlsPoints({ data, xPos }: any) {
+export interface IPoint {
+  x: number,
+  y: number
+}
+
+/**
+ * A number, or a string containing a number.
+ * @typedef {{prev: IPoint, point: IPoint, next: IPoint}} ControlPoints 
+ */
+export interface ControlPoints {
+  prev: IPoint, point: IPoint, next: IPoint
+}
+
+/**
+ * A number, or a string containing a number.
+ * @typedef {IPoint[]} Dataset
+ */
+
+/**
+ * 
+ * @param {Object} params - Dataset and X value
+ * @param {Dataset} params.data - Dataset
+ * @param {number} params.xPos - X value 
+ * @returns {ControlPoints} Prev, Point and Next
+ */
+export function _getPointsToCalculateControlsPoints({ data, xPos }: { data: Array<IPoint>, xPos: number }): ControlPoints {
   let prev: any, point: any, next: any;
 
   if (xPos === data[0].x) {
     xPos += 1;
   }
 
-  let nextItemIndex = data.findIndex((point: any) => point.x >= xPos);
+  let nextItemIndex = data.findIndex((point: IPoint) => point.x >= xPos);
 
   if (xPos === data[data.length - 1].x) {
     nextItemIndex = -1;
@@ -36,10 +61,16 @@ export function _getPointsToCalculateControlsPoints({ data, xPos }: any) {
   point = data[currentItemIndex];
   next = data[nextItemIndex];
 
-  return { prev, point, next };
+  return { prev, point, next } as ControlPoints;
 }
-
-export function findYPositionAtX({ data, xPos, tension }: any) {
+/**
+ * @param {Object} params - Dataset, X and Tension value
+ * @param {Dataset} params.data - Dataset
+ * @param {number} params.xPos - X value
+ * @param {number} params.tension - Tension https://www.chartjs.org/docs/3.9.1/charts/line.html#dataset-properties
+ * @returns {number|undefined} Y value
+ */
+export function findYPositionAtX({ data, xPos, tension }: { data: Array<IPoint>, xPos: number, tension: number }): number | undefined {
   const {
     prev,
     point,
@@ -52,8 +83,8 @@ export function findYPositionAtX({ data, xPos, tension }: any) {
       xPos === data[0].x
         ? 0
         : xPos === data[data.length - 1].x
-        ? 1
-        : (xPos - point.x) /
+          ? 1
+          : (xPos - point.x) /
           xDistance; /* We need to calculate the t which have values from 0 to 1 */
     const controlPoints = splineCurve(prev, point, next, tension);
     const { next: p1 } = controlPoints;
