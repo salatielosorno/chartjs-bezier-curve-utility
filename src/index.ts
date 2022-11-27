@@ -41,41 +41,44 @@ export function _getPointsToCalculateControlsPoints({ data, xPos }: any) {
 
 export function findYPositionAtX({ data, xAbsPos, tension }: any) {
   const {
-    prev: p0,
-    point: p1,
-    next: p2
+    prev,
+    point,
+    next
   } = _getPointsToCalculateControlsPoints({ data, xPos: xAbsPos });
 
-  if (p1 && p2) {
-    const xDistance = p2.x - p1.x;
+  if (point && next) {
+    const xDistance = next.x - point.x;
     const t =
       xAbsPos === data[0].x
         ? 0
         : xAbsPos === data[data.length - 1].x
         ? 1
-        : (xAbsPos - p1.x) /
+        : (xAbsPos - point.x) /
           xDistance; /* We need to calculate the t which have values from 0 to 1 */
-    const controlPoints = splineCurve(p0, p1, p2, tension);
-    const { previous: PCL, next: PCR } = controlPoints;
+    const controlPoints = splineCurve(prev, point, next, tension);
+    const { next: p1 } = controlPoints;
 
-    const p3 = data[data.length - 1];
+    const xPos2 = data[data.length - 1];
     const {
-      prev: pi1,
-      point: pi2,
-      next: pi3
-    } = _getPointsToCalculateControlsPoints({ data, xPos: p3.x });
+      prev: prev2,
+      point: point2,
+      next: next2
+    } = _getPointsToCalculateControlsPoints({ data, xPos: xPos2.x });
 
-    const controlPoints2 = splineCurve(pi1, pi2, pi3, tension);
-    const { previous: PCL2, next: PCR2 } = controlPoints2;
+    const controlPoints2 = splineCurve(prev2, point2, next2, tension);
+    const { previous: p2 } = controlPoints2;
+
+    const p0 = point;
+    const p3 = next;
 
     const x =
-      Math.pow(1 - t, 3) * p1.x +
-      3 * (1 - t) * t * PCR.x * 3 * Math.pow(t, 2) * (1 - t) * PCL2.x +
-      Math.pow(t, 3) * p2.x;
+      Math.pow(1 - t, 3) * p0.x +
+      3 * Math.pow(1 - t, 2) * t * p1.x + 3 * Math.pow(t, 2) * (1 - t) * p2.x +
+      Math.pow(t, 3) * p3.x;
     const y =
-      Math.pow(1 - t, 3) * p1.y +
-      3 * (1 - t) * t * PCR.y * 3 * Math.pow(t, 2) * (1 - t) * PCL2.y +
-      Math.pow(t, 3) * p2.y;
+      Math.pow(1 - t, 3) * p0.y +
+      3 * Math.pow(1 - t, 2) * t * p1.y + 3 * Math.pow(t, 2) * (1 - t) * p2.y +
+      Math.pow(t, 3) * p3.y;
 
     return y;
   }
