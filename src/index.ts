@@ -3,13 +3,13 @@ import { splineCurve } from 'chart.js/helpers';
 export function _getPointsToCalculateControlsPoints({ data, xPos }: any) {
   let prev: any, point: any, next: any;
 
-  if(xPos === data[0].x){
-    xPos +=1;
+  if (xPos === data[0].x) {
+    xPos += 1;
   }
 
   let nextItemIndex = data.findIndex((point: any) => point.x >= xPos);
 
-  if(xPos === data[data.length - 1].x) {
+  if (xPos === data[data.length - 1].x) {
     nextItemIndex = -1;
     xPos += 1;
   }
@@ -40,21 +40,10 @@ export function _getPointsToCalculateControlsPoints({ data, xPos }: any) {
 }
 
 export function findYPositionAtX({ data, xAbsPos, tension }: any) {
-  const xs = data.map((item: any) => item.x);
-  const ys = data.map((item: any) => item.y);
-
-  /* console.info('xs >> ', xs);
-  console.info('ys >> ', ys);
-  console.log('xAbsPos >> ', xAbsPos); */
-
-  const index = data.findIndex((point: any) => point.x >= xAbsPos);
-  const p0 = data[index - 2] ?? { skip: true };
-  const p1 = data[index - 1];
-  const p2 = data[index];
+  const { prev: p0, point: p1, next: p2 } = _getPointsToCalculateControlsPoints({ data, xPos: xAbsPos })
 
   if (p1 && p2) {
     const xDistance = p2.x - p1.x;
-    /* console.log('xDistance >> ', xDistance); */
     const t =
       (xAbsPos - p1.x) /
       xDistance; /* We need to calculate the t which have values from 0 to 1 */
@@ -62,8 +51,9 @@ export function findYPositionAtX({ data, xAbsPos, tension }: any) {
     const { previous: PCL, next: PCR } = controlPoints;
 
     const p3 = data[data.length - 1];
+    const {prev: pi1, point: pi2, next: pi3} = _getPointsToCalculateControlsPoints({data,xPos: p3.x});
 
-    const controlPoints2 = splineCurve(p1, p2, p3, tension);
+    const controlPoints2 = splineCurve(pi1, pi2, pi3, tension);
     const { previous: PCL2, next: PCR2 } = controlPoints2;
 
     const x =
@@ -75,20 +65,6 @@ export function findYPositionAtX({ data, xAbsPos, tension }: any) {
       3 * (1 - t) * t * PCR.y * 3 * Math.pow(t, 2) * (1 - t) * PCL2.y +
       Math.pow(t, 3) * p2.y;
 
-    /* console.log('x >> ', x);
-    console.log('y >> ', y); */
-
     return y;
   }
 }
-
-/* findYPositionBezierCurve({
-  data: [
-    { x: 0.3267323970794678, y: 0 },
-    { x: 5.326732397079468, y: 5 },
-    { x: 15.326732397079468, y: 1.5 },
-    { x: 40.32673239707947, y: 1.5 }
-  ],
-  xAbsPos: 5.326732397079468,
-  tension: 0.5
-}); */
