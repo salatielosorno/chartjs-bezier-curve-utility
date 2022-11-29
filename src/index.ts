@@ -93,16 +93,20 @@ export function findYPositionAtX({ data, xPos, tension }: { data: Array<IPoint>,
   } = _getPointsToCalculateControlsPoints({ data, xPos: xPos });
 
   if (point && next) {
-    const t = _getT({ xPos, leftPointX: point.x, nextPointX: next.x, minXPos: data[0].x, maxXPos: data[data.length - 1].x });
+    const t = _getT({ xPos, leftPointX: point.x, nextPointX: next.x, minXPos: data[0].x, maxXPos: next.x });
     const controlPoints = splineCurve(prev, point, next, tension);
     const { next: p1 } = controlPoints;
+    
+    const xPos2Index = data.findIndex((point:IPoint) => point.x > next.x);
+    const xPos2 = xPos2Index !== -1 && xPos2Index ? data[xPos2Index - 1] : next;
+    const nextToXPos2 = xPos2Index !== -1 && xPos2Index ? data[xPos2Index] : next;
+    const diff = nextToXPos2.x - xPos2.x;
 
-    const xPos2 = data[data.length - 1];
     const {
       prev: prev2,
       point: point2,
       next: next2
-    } = _getPointsToCalculateControlsPoints({ data, xPos: xPos2.x });
+    } = _getPointsToCalculateControlsPoints({ data, xPos: xPos2.x + diff });
 
     const controlPoints2 = splineCurve(prev2, point2, next2, tension);
     const { previous: p2 } = controlPoints2;
