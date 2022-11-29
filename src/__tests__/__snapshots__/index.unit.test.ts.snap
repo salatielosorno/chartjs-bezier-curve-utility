@@ -2,6 +2,10 @@
 
 exports[`chartjs-bezier-curve-utility find y at x when t is equal to 0 1`] = `0`;
 
+exports[`chartjs-bezier-curve-utility find y at x when t is equal to 0, tension 0 1`] = `2`;
+
+exports[`chartjs-bezier-curve-utility find y at x when t is equal to 1, tension 0 1`] = `0`;
+
 exports[`chartjs-bezier-curve-utility find y at x when t is equal to 5 1`] = `5`;
 
 exports[`chartjs-bezier-curve-utility find y at x when t is equal to 5.326732397079468 1`] = `5`;
@@ -113,3 +117,9 @@ exports[`chartjs-bezier-curve-utility get prev, current and next points -> x = 4
   },
 }
 `;
+
+exports[`chartjs-bezier-curve-utility get t value for x = 0 1`] = `0`;
+
+exports[`chartjs-bezier-curve-utility get t value for x = 7.5 1`] = `0.5`;
+
+exports[`chartjs-bezier-curve-utility get t value for x = 15 1`] = `1`;
