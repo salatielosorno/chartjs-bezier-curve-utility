@@ -1,16 +1,18 @@
 import { splineCurve } from 'chart.js/helpers';
 
 export interface IPoint {
-  x: number,
-  y: number
+  x: number;
+  y: number;
 }
 
 /**
  * A number, or a string containing a number.
- * @typedef {{prev: IPoint, point: IPoint, next: IPoint}} ControlPoints 
+ * @typedef {{prev: IPoint, point: IPoint, next: IPoint}} ControlPoints
  */
 export interface ControlPoints {
-  prev: IPoint, point: IPoint, next: IPoint
+  prev: IPoint;
+  point: IPoint;
+  next: IPoint;
 }
 
 /**
@@ -19,13 +21,19 @@ export interface ControlPoints {
  */
 
 /**
- * 
+ *
  * @param {Object} params - Dataset and X value
  * @param {Dataset} params.data - Dataset
- * @param {number} params.xPos - X value 
+ * @param {number} params.xPos - X value
  * @returns {ControlPoints} Prev, Point and Next
  */
-export function _getPointsToCalculateControlsPoints({ data, xPos }: { data: Array<IPoint>, xPos: number }): ControlPoints {
+export function _getPointsToCalculateControlsPoints({
+  data,
+  xPos
+}: {
+  data: Array<IPoint>;
+  xPos: number;
+}): ControlPoints {
   let prev: any, point: any, next: any;
 
   if (xPos === data[0].x) {
@@ -64,15 +72,28 @@ export function _getPointsToCalculateControlsPoints({ data, xPos }: { data: Arra
   return { prev, point, next } as ControlPoints;
 }
 
-export function _getT({ xPos, leftPointX, nextPointX, minXPos, maxXPos }: { xPos: number, leftPointX: number, nextPointX: number, minXPos: number, maxXPos: number }) {
+export function _getT({
+  xPos,
+  leftPointX,
+  nextPointX,
+  minXPos,
+  maxXPos
+}: {
+  xPos: number;
+  leftPointX: number;
+  nextPointX: number;
+  minXPos: number;
+  maxXPos: number;
+}) {
   let t = 0;
-  
-  if (xPos === maxXPos)
-  t = 1;
-  
-  if (xPos > leftPointX){
-    const distance = nextPointX - leftPointX; /* We need to calculate the t which have values from 0 to 1 */
-    t = (xPos - leftPointX) / distance; 
+
+  if (xPos === maxXPos) t = 1;
+
+  if (xPos > leftPointX) {
+    const distance =
+      nextPointX -
+      leftPointX; /* We need to calculate the t which have values from 0 to 1 */
+    t = (xPos - leftPointX) / distance;
   }
 
   return t;
@@ -85,21 +106,35 @@ export function _getT({ xPos, leftPointX, nextPointX, minXPos, maxXPos }: { xPos
  * @param {number} params.tension - Tension https://www.chartjs.org/docs/3.9.1/charts/line.html#dataset-properties
  * @returns {number|undefined} Y value
  */
-export function findYPositionAtX({ data, xPos, tension }: { data: Array<IPoint>, xPos: number, tension: number }): number | undefined {
-  const {
-    prev,
-    point,
-    next
-  } = _getPointsToCalculateControlsPoints({ data, xPos: xPos });
+export function findYPositionAtX({
+  data,
+  xPos,
+  tension
+}: {
+  data: Array<IPoint>;
+  xPos: number;
+  tension: number;
+}): number | undefined {
+  const { prev, point, next } = _getPointsToCalculateControlsPoints({
+    data,
+    xPos: xPos
+  });
 
   if (point && next) {
-    const t = _getT({ xPos, leftPointX: point.x, nextPointX: next.x, minXPos: data[0].x, maxXPos: next.x });
+    const t = _getT({
+      xPos,
+      leftPointX: point.x,
+      nextPointX: next.x,
+      minXPos: data[0].x,
+      maxXPos: next.x
+    });
     const controlPoints = splineCurve(prev, point, next, tension);
     const { next: p1 } = controlPoints;
-    
-    const xPos2Index = data.findIndex((point:IPoint) => point.x > next.x);
+
+    const xPos2Index = data.findIndex((point: IPoint) => point.x > next.x);
     const xPos2 = xPos2Index !== -1 && xPos2Index ? data[xPos2Index - 1] : next;
-    const nextToXPos2 = xPos2Index !== -1 && xPos2Index ? data[xPos2Index] : next;
+    const nextToXPos2 =
+      xPos2Index !== -1 && xPos2Index ? data[xPos2Index] : next;
     const diff = nextToXPos2.x - xPos2.x;
 
     const {
@@ -116,11 +151,13 @@ export function findYPositionAtX({ data, xPos, tension }: { data: Array<IPoint>,
 
     const x =
       Math.pow(1 - t, 3) * p0.x +
-      3 * Math.pow(1 - t, 2) * t * p1.x + 3 * Math.pow(t, 2) * (1 - t) * p2.x +
+      3 * Math.pow(1 - t, 2) * t * p1.x +
+      3 * Math.pow(t, 2) * (1 - t) * p2.x +
       Math.pow(t, 3) * p3.x;
     const y =
       Math.pow(1 - t, 3) * p0.y +
-      3 * Math.pow(1 - t, 2) * t * p1.y + 3 * Math.pow(t, 2) * (1 - t) * p2.y +
+      3 * Math.pow(1 - t, 2) * t * p1.y +
+      3 * Math.pow(t, 2) * (1 - t) * p2.y +
       Math.pow(t, 3) * p3.y;
 
     return y;

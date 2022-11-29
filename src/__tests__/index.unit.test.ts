@@ -1,4 +1,8 @@
-import { findYPositionAtX, _getPointsToCalculateControlsPoints, _getT } from '..';
+import {
+  findYPositionAtX,
+  _getPointsToCalculateControlsPoints,
+  _getT
+} from '..';
 
 describe('chartjs-bezier-curve-utility', () => {
   test('get t value for x = 0', () => {
