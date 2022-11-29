@@ -1,6 +1,65 @@
-import { findYPositionAtX, _getPointsToCalculateControlsPoints } from '..';
+import { findYPositionAtX, _getPointsToCalculateControlsPoints, _getT } from '..';
 
 describe('chartjs-bezier-curve-utility', () => {
+  test('get t value for x = 0', () => {
+    const xPos = 0;
+    const leftPointX = 0;
+    const nextPointX = 0;
+    const minXPos = 0;
+    const maxXPos = 15;
+    const t = _getT({ xPos, leftPointX, nextPointX, minXPos, maxXPos });
+
+    expect(t).toMatchSnapshot();
+  });
+
+  test('get t value for x = 15', () => {
+    const xPos = 15;
+    const leftPointX = 15;
+    const nextPointX = 15;
+    const minXPos = 0;
+    const maxXPos = 15;
+    const t = _getT({ xPos, leftPointX, nextPointX, minXPos, maxXPos });
+
+    expect(t).toMatchSnapshot();
+  });
+
+  test('get t value for x = 7.5', () => {
+    const xPos = 7.5;
+    const leftPointX = 0;
+    const nextPointX = 15;
+    const minXPos = 0;
+    const maxXPos = 15;
+    const t = _getT({ xPos, leftPointX, nextPointX, minXPos, maxXPos });
+
+    expect(t).toMatchSnapshot();
+  });
+
+  test('find y at x when t is equal to 0, tension 0', () => {
+    const data: any = [
+      { x: 0, y: 2 },
+      { x: 2, y: 0 }
+    ];
+    const xPos = 0;
+    const tension = 0;
+
+    const y = findYPositionAtX({ data, xPos, tension });
+
+    expect(y).toMatchSnapshot();
+  });
+
+  test('find y at x when t is equal to 1, tension 0', () => {
+    const data: any = [
+      { x: 0, y: 2 },
+      { x: 2, y: 0 }
+    ];
+    const xPos = 2;
+    const tension = 0;
+
+    const y = findYPositionAtX({ data, xPos, tension });
+
+    expect(y).toMatchSnapshot();
+  });
+
   test('find y at x when t is equal to 0', () => {
     const data: any = [
       { x: 0, y: 0 },

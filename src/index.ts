@@ -63,6 +63,21 @@ export function _getPointsToCalculateControlsPoints({ data, xPos }: { data: Arra
 
   return { prev, point, next } as ControlPoints;
 }
+
+export function _getT({ xPos, leftPointX, nextPointX, minXPos, maxXPos }: { xPos: number, leftPointX: number, nextPointX: number, minXPos: number, maxXPos: number }) {
+  let t = 0;
+  
+  if (xPos === maxXPos)
+  t = 1;
+  
+  if (xPos > leftPointX){
+    const distance = nextPointX - leftPointX; /* We need to calculate the t which have values from 0 to 1 */
+    t = (xPos - leftPointX) / distance; 
+  }
+
+  return t;
+}
+
 /**
  * @param {Object} params - Dataset, X and Tension value
  * @param {Dataset} params.data - Dataset
@@ -78,14 +93,7 @@ export function findYPositionAtX({ data, xPos, tension }: { data: Array<IPoint>,
   } = _getPointsToCalculateControlsPoints({ data, xPos: xPos });
 
   if (point && next) {
-    const xDistance = next.x - point.x;
-    const t =
-      xPos === data[0].x
-        ? 0
-        : xPos === data[data.length - 1].x
-          ? 1
-          : (xPos - point.x) /
-          xDistance; /* We need to calculate the t which have values from 0 to 1 */
+    const t = _getT({ xPos, leftPointX: point.x, nextPointX: next.x, minXPos: data[0].x, maxXPos: data[data.length - 1].x });
     const controlPoints = splineCurve(prev, point, next, tension);
     const { next: p1 } = controlPoints;
 
