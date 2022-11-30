@@ -5,15 +5,16 @@ export interface IPoint {
   y: number;
 }
 
-/**
- * A number, or a string containing a number.
- * @typedef {{prev: IPoint, point: IPoint, next: IPoint}} ControlPoints
- */
 export interface ControlPoints {
   prev: IPoint;
   point: IPoint;
   next: IPoint;
 }
+
+/**
+ * A number, or a string containing a number.
+ * @typedef {{prev: IPoint, point: IPoint, next: IPoint}} ControlPoints
+ */
 
 /**
  * A number, or a string containing a number.
@@ -72,17 +73,24 @@ export function _getPointsToCalculateControlsPoints({
   return { prev, point, next } as ControlPoints;
 }
 
+/**
+ *
+ * @param {Object} params - Values to calculate t value
+ * @param {number} params.xPos - X position
+ * @param {number} params.leftPointX - X value at left from X position
+ * @param {number} params.nextPointX - X value at right from X position
+ * @param {number} params.maxXPos - X max value
+ * @returns {number} t value
+ */
 export function _getT({
   xPos,
   leftPointX,
-  nextPointX,
-  minXPos,
+  rightPointX,
   maxXPos
 }: {
   xPos: number;
   leftPointX: number;
-  nextPointX: number;
-  minXPos: number;
+  rightPointX: number;
   maxXPos: number;
 }) {
   let t = 0;
@@ -91,7 +99,7 @@ export function _getT({
 
   if (xPos > leftPointX) {
     const distance =
-      nextPointX -
+      rightPointX -
       leftPointX; /* We need to calculate the t which have values from 0 to 1 */
     t = (xPos - leftPointX) / distance;
   }
@@ -124,8 +132,7 @@ export function findYPositionAtX({
     const t = _getT({
       xPos,
       leftPointX: point.x,
-      nextPointX: next.x,
-      minXPos: data[0].x,
+      rightPointX: next.x,
       maxXPos: next.x
     });
     const controlPoints = splineCurve(prev, point, next, tension);

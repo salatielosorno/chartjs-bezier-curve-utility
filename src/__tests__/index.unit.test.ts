@@ -8,10 +8,9 @@ describe('chartjs-bezier-curve-utility', () => {
   test('get t value for x = 0', () => {
     const xPos = 0;
     const leftPointX = 0;
-    const nextPointX = 0;
-    const minXPos = 0;
+    const rightPointX = 0;
     const maxXPos = 15;
-    const t = _getT({ xPos, leftPointX, nextPointX, minXPos, maxXPos });
+    const t = _getT({ xPos, leftPointX, rightPointX, maxXPos });
 
     expect(t).toMatchSnapshot();
   });
@@ -19,10 +18,9 @@ describe('chartjs-bezier-curve-utility', () => {
   test('get t value for x = 15', () => {
     const xPos = 15;
     const leftPointX = 15;
-    const nextPointX = 15;
-    const minXPos = 0;
+    const rightPointX = 15;
     const maxXPos = 15;
-    const t = _getT({ xPos, leftPointX, nextPointX, minXPos, maxXPos });
+    const t = _getT({ xPos, leftPointX, rightPointX, maxXPos });
 
     expect(t).toMatchSnapshot();
   });
@@ -30,10 +28,9 @@ describe('chartjs-bezier-curve-utility', () => {
   test('get t value for x = 7.5', () => {
     const xPos = 7.5;
     const leftPointX = 0;
-    const nextPointX = 15;
-    const minXPos = 0;
+    const rightPointX = 15;
     const maxXPos = 15;
-    const t = _getT({ xPos, leftPointX, nextPointX, minXPos, maxXPos });
+    const t = _getT({ xPos, leftPointX, rightPointX, maxXPos });
 
     expect(t).toMatchSnapshot();
   });
